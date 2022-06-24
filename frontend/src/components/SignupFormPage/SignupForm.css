@@ -1,0 +1,6 @@
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid greenyellow;
+  border-radius: 12px;
+}
