@@ -17,11 +17,11 @@ const Notebooks = () => {
 
   return (
     <div>
-      <ul>
-        {notebooks.map(notebook => (
-          <li key={notebook.id}>{notebook.name}</li>
-        ))}
-      </ul>
+      {notebooks.map(notebook => (
+        <div key={notebook.id} className="notebook-card">
+          {notebook.name}
+        </div>
+      ))}
     </div>
   )
 }
