@@ -20,11 +20,18 @@ function Navigation({ isLoaded }) {
       </>
     );
   }
+  let notebookLinks;
+  if (sessionUser) {
+    notebookLinks = (
+      <NavLink to='/notebooks'>My NoteBooks</NavLink>
+    )
+  }
 
   return (
-    <ul>
+    <ul className='user-nav'>
       <li>
         <NavLink exact to="/">Home</NavLink>
+        {isLoaded && notebookLinks}
         {isLoaded && sessionLinks}
       </li>
     </ul>
