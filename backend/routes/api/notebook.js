@@ -28,11 +28,11 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
 router.post('/users/:id(\\d+)', validateNotebook, asyncHandler(async (req, res) => {
   const userId = req.params.id
   const { name } = req.body;
-  const note = await db.Notebook.create({
+  const notebook = await db.Notebook.create({
     name,
     userId: userId
   });
-  return res.redirect(`${req.baseUrl}/${note}`)
+  return res.json(notebook)
 }));
 
 module.exports = router;

@@ -25,6 +25,7 @@ export const getNotebooks = (userId) => async dispatch => {
 };
 
 export const createNotebook = (payload) => async dispatch => {
+  console.log(payload.userId);
   const response = await csrfFetch(`/api/notebooks/users/${payload.userId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

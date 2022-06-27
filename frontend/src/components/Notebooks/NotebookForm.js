@@ -23,7 +23,9 @@ const NotebookForm = () => {
     }
     const res = await dispatch(createNotebook(payload));
     if (res) {
-      history.push('/notebooks');
+      console.log(res.id);
+      history.push(`/notebooks`);
+      setName('');
       // setShowForm(false);
     }
   }
@@ -32,12 +34,12 @@ const NotebookForm = () => {
       <form className="notebook-form" onSubmit={handleSubmit}>
         <input
           type='text'
-          placeholder='Notebook Name'
+          placeholder='Create a New Notebook'
           required
           value={name}
           onChange={e => setName(e.target.value)} />
+        <button type="submit">+</button>
       </form>
-      <button type="submit">+</button>
     </div>
   )
 }
