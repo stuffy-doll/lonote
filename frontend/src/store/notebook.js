@@ -11,18 +11,14 @@ const get = (notebooks) => {
 
 export const getNotebooks = (userId) => async dispatch => {
   const response = await csrfFetch(`/api/notebooks/users/${userId}`)
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(get(data));
-    return data;
-  } else {
-    return response.json();
-  }
+  const data = await response.json();
+  dispatch(get(data));
+  return data;
 }
 
-export const createNotebook = (userId) => async dispatch => {
-  const response = await csrfFetch(``)
-}
+// export const createNotebook = (userId) => async dispatch => {
+//   const response = await csrfFetch(``)
+// }
 
 const notebookReducer = (state = {}, action) => {
   console.log('action:: ', action);

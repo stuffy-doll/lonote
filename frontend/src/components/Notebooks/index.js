@@ -2,7 +2,7 @@ import { getNotebooks } from "../../store/notebook";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Notebooks = ({ isLoaded }) => {
+const Notebooks = () => {
   const dispatch = useDispatch();
   const data = useSelector(state => state.notebooks);
   useEffect(() => {
