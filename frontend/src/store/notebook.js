@@ -20,6 +20,10 @@ export const getNotebooks = (userId) => async dispatch => {
   }
 }
 
+export const createNotebook = (userId) => async dispatch => {
+  const response = await csrfFetch(``)
+}
+
 const notebookReducer = (state = {}, action) => {
   console.log('action:: ', action);
   let newState = { ...state }

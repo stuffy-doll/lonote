@@ -12,4 +12,12 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   return res.json(notebooks);
 }));
 
+router.post('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const { title, content } = req.body;
+  const note = await db.Note.create({
+    title,
+    content
+  });
+}))
+
 module.exports = router;
