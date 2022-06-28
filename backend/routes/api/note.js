@@ -14,3 +14,5 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   console.log(notes);
   return res.json(notes);
 }))
+
+module.exports = router;
