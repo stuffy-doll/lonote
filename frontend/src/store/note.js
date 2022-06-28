@@ -42,6 +42,19 @@ export const getNotes = (userId) => async dispatch => {
   const notes = await response.json();
   dispatch(get(notes));
   return notes;
+};
+
+export const createNote = (payload) => async dispatch => {
+  const response = await csrfFetch(`/api/notes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (response.ok) {
+    const note = await response.json();
+    dispatch(create(note));
+    return note;
+  }
 }
 
 // Reducer
@@ -52,6 +65,12 @@ const noteReducer = (state = {}, action) => {
       action.notes.forEach(note => {
         newState[note.id] = note;
       });
+      return newState;
+    case CREATE_NOTE:
+      newState = {
+        ...state,
+        [action.note.id]: action.note
+      };
       return newState;
     default:
       return state

@@ -9,9 +9,6 @@ const NotebookForm = () => {
   const [name, setName] = useState('');
 
   const sessionUserId = useSelector(state => state.session.user.id)
-  useEffect(() => {
-    // Todo
-  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { getNotes } from "../../store/note";
+import NoteForm from "./NewNoteForm";
 const { useSelector, useDispatch } = require("react-redux")
 
 // ToDo: Render a Note Page
@@ -13,17 +14,16 @@ const NoteList = () => {
     dispatch(getNotes(sessionUserId))
   }, [dispatch]);
 
-  if (!notes) {
+  if (!notes.length) {
     return (
       <>
-        <h2>No Notes Yet!</h2>
-        <button>Make a note!</button>
+        <h3>No Notes Yet!</h3>
+        <NoteForm notebook={notebookId} />
       </>
     )
-  }
-
-  return (
+  } else return (
     <div className="note-list">
+      <NoteForm notebook={notebookId} />
       {sessionUserId && (
         <ul>
           {notes.map(note => (

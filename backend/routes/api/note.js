@@ -10,6 +10,17 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
     where: { userId: userId }
   })
   return res.json(notes);
-}))
+}));
+
+router.post('/', asyncHandler(async (req, res) => {
+  const { userId, notebookId, title, content } = req.body;
+  const note = await db.Note.create({
+    userId,
+    notebookId,
+    title,
+    content
+  });
+  return res.json(note);
+}));
 
 module.exports = router;
