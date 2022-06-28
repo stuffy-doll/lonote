@@ -6,12 +6,9 @@ const db = require('../../db/models');
 
 router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  const notes = await db.Notebook.findAll({
-    where: { userId: userId },
-    include: ['notes']
+  const notes = await db.Note.findAll({
+    where: { userId: userId }
   })
-  console.log(req);
-  console.log(notes);
   return res.json(notes);
 }))
 

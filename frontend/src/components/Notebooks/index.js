@@ -1,14 +1,18 @@
 import { getNotebooks } from "../../store/notebook";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link, Route } from "react-router-dom";
 import NoteList from "../Note";
+import EditNoteBook from "../EditNoteBookForm";
 
 const Notebooks = () => {
   const dispatch = useDispatch();
   const sessionUserId = useSelector(state => state.session.user.id)
   const data = useSelector(state => state.notebooks);
+
+  // const [showForm, setShowForm] = useState(false);
+
   useEffect(() => {
     dispatch(getNotebooks(sessionUserId))
   }, [dispatch]);
@@ -32,9 +36,11 @@ const Notebooks = () => {
           {notebooks.map(notebook => (
             <div key={notebook.id} className="notebook-card">
               <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
-              <NoteList />
             </div>
           ))}
+          <Route path='/notebooks/:notebookId'>
+            <NoteList />
+          </Route>
         </div>
       )}
     </>

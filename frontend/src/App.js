@@ -33,9 +33,6 @@ function App() {
           <Route path='/notebooks'>
             <Notebooks />
           </Route>
-          <Route path='/notebooks/:notebookId'>
-            <NoteList />
-          </Route>
         </Switch>
       )}
     </>

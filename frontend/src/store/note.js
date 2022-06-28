@@ -1,12 +1,12 @@
 import { csrfFetch } from "./csrf";
 
 // Constants
-
 const GET_NOTES = 'notes/getNotes';
 const CREATE_NOTE = 'notes/postNote';
 const UPDATE_NOTE = 'notes/updateNote';
 const DELETE_NOTE = 'notes/deleteNote';
 
+// Actions
 const get = (notes) => {
   return {
     type: GET_NOTES,
@@ -35,14 +35,17 @@ const destroy = (note) => {
   };
 };
 
+// Thunks
 export const getNotes = (userId) => async dispatch => {
-  const response = await csrfFetch(`/api/notebooks/users/${userId}`);
+  // Filter through notebooks
+  const response = await csrfFetch(`/api/notes/users/${userId}`);
   const notes = await response.json();
   dispatch(get(notes));
   return notes;
 }
 
-export const noteReducer = (state = {}, action) => {
+// Reducer
+const noteReducer = (state = {}, action) => {
   let newState = { ...state };
   switch (action.type) {
     case GET_NOTES:
@@ -54,3 +57,5 @@ export const noteReducer = (state = {}, action) => {
       return state
   }
 }
+
+export default noteReducer;

@@ -54,12 +54,15 @@ export const createNotebook = (payload) => async dispatch => {
     const notebook = await response.json();
     dispatch(post(notebook));
     return notebook;
-  }
+  };
+};
+
+export const updateNotebook = (payload) => async dispatch => {
+  const response = await csrfFetch(`/api/notebooks/${payload.notebookId}`)
 }
 
 // Reducer
 const notebookReducer = (state = {}, action) => {
-  console.log('action:: ', action);
   let newState = { ...state }
   switch (action.type) {
     case GET_NOTEBOOKS:
@@ -72,6 +75,7 @@ const notebookReducer = (state = {}, action) => {
         ...state,
         [action.notebook.id]: action.notebook
       };
+      return newState;
     case UPDATE_NOTEBOOK:
     // ToDo
     case DELETE_NOTEBOOK:

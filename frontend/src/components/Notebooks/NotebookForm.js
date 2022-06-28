@@ -7,10 +7,8 @@ const NotebookForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [name, setName] = useState('');
-  // const [showForm, setShowForm] = useState(false);
 
   const sessionUserId = useSelector(state => state.session.user.id)
-  // console.log('sessionUserID::', sessionUserId);
   useEffect(() => {
     // Todo
   });
@@ -23,12 +21,10 @@ const NotebookForm = () => {
     }
     const res = await dispatch(createNotebook(payload));
     if (res) {
-      console.log(res.id);
       history.push(`/notebooks`);
       setName('');
-      // setShowForm(false);
-    }
-  }
+    };
+  };
   return (
     <div>
       <form className="notebook-form" onSubmit={handleSubmit}>

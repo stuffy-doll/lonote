@@ -15,7 +15,11 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(50)
+      },
+      isDefault: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

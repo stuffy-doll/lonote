@@ -6,8 +6,13 @@ const Home = () => {
 
   if (user) {
     return (
-      <h1>Welcome, {user.username}!</h1>
-
+      <main>
+        <h1>Welcome, {user.username}!</h1>
+        <div className="get-started">
+          <p>Let's get started...</p>
+          <button>Make a note!</button>
+        </div>
+      </main>
     )
   } else {
     return (
