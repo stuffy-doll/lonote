@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Notebooks from "./components/Notebooks";
 import Home from "./components/Home";
+import NoteList from "./components/Note";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,8 +30,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path={['/notebooks', 'notebooks/:notebookId']}>
+          <Route path='/notebooks'>
             <Notebooks />
+          </Route>
+          <Route path='/notebooks/:notebookId'>
+            <NoteList />
           </Route>
         </Switch>
       )}

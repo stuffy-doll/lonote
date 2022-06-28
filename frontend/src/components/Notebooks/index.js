@@ -2,7 +2,8 @@ import { getNotebooks } from "../../store/notebook";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import NoteList from "../Note";
 
 const Notebooks = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,8 @@ const Notebooks = () => {
           <NotebookForm />
           {notebooks.map(notebook => (
             <div key={notebook.id} className="notebook-card">
-              {notebook.name}
+              <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
+              <NoteList />
             </div>
           ))}
         </div>

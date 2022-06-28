@@ -17,11 +17,12 @@ const validateNotebook = [
 
 router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  console.log('userId:: ', userId)
+  // console.log('userId:: ', userId)
   const notebooks = await db.Notebook.findAll({
     where: { userId: userId },
     include: ['notes']
   });
+  console.log(notebooks);
   return res.json(notebooks);
 }));
 
