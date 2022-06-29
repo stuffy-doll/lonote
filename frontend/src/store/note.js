@@ -54,7 +54,18 @@ export const createNote = (payload) => async dispatch => {
     const note = await response.json();
     dispatch(create(note));
     return note;
-  }
+  };
+};
+
+export const destroyNote = (noteId) => async dispatch => {
+  const response = await csrfFetch(`/api/notes/${noteId}`, {
+    method: 'DELETE',
+    statusCode: 204,
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const note = await response.json();
+  dispatch(destroy(note));
+  return note;
 }
 
 // Reducer
@@ -71,6 +82,10 @@ const noteReducer = (state = {}, action) => {
         ...state,
         [action.note.id]: action.note
       };
+      return newState;
+    case DELETE_NOTE:
+      newState = { ...state }
+      delete newState[action.note.id]
       return newState;
     default:
       return state

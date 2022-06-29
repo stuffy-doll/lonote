@@ -23,4 +23,16 @@ router.post('/', asyncHandler(async (req, res) => {
   return res.json(note);
 }));
 
+router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const noteId = req.params.id;
+  const note = await db.Note.findByPk(noteId);
+  console.log(note);
+  if (note) {
+    await note.destroy();
+    res.status(200).json({ message: 'Delete successful.' });
+  } else {
+    res.status(400).json({ message: 'Unsuccessful' });
+  };
+}));
+
 module.exports = router;

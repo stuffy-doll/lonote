@@ -1,4 +1,4 @@
-import { getNotebooks } from "../../store/notebook";
+import { deleteNotebook, getNotebooks } from "../../store/notebook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
@@ -36,6 +36,14 @@ const Notebooks = () => {
           {notebooks.map(notebook => (
             <div key={notebook.id} className="notebook-card">
               <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
+              {/* <EditNoteBook notebook={notebook} /> */}
+              <button onClick={async (e) => {
+                e.preventDefault();
+                const res = await dispatch(deleteNotebook(notebook.id));
+                if (res) {
+                  console.log(res);
+                }
+              }}>Delete This Notebook</button>
             </div>
           ))}
           <Route path='/notebooks/:notebookId'>

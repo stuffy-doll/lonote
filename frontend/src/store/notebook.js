@@ -44,7 +44,6 @@ export const getNotebooks = (userId) => async dispatch => {
 };
 
 export const createNotebook = (payload) => async dispatch => {
-  console.log(payload.userId);
   const response = await csrfFetch(`/api/notebooks/users/${payload.userId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -57,9 +56,22 @@ export const createNotebook = (payload) => async dispatch => {
   };
 };
 
-export const updateNotebook = (payload) => async dispatch => {
-  const response = await csrfFetch(`/api/notebooks/${payload.notebookId}`)
-}
+// export const updateNotebook = (payload) => async dispatch => {
+//   const response = await csrfFetch(`/api/notebooks/${payload.notebookId}`)
+// }
+
+export const deleteNotebook = (notebookId) => async dispatch => {
+  const response = await csrfFetch(`/api/notebooks/${notebookId}`, {
+    method: 'DELETE',
+    statusCode: 204,
+    headers: { 'Content-Type': 'application/json' }
+  });
+  if (response.ok) {
+    const notebook = await response.json();
+    dispatch(destroy(notebook));
+    return notebook;
+  };
+};
 
 // Reducer
 const notebookReducer = (state = {}, action) => {
@@ -79,7 +91,9 @@ const notebookReducer = (state = {}, action) => {
     case UPDATE_NOTEBOOK:
     // ToDo
     case DELETE_NOTEBOOK:
-    // ToDo
+      newState = { ...state };
+      delete newState[action.notebook.id];
+      return newState
     default:
       return state;
   };

@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom";
 import { updateNotebook } from "../../store/notebook";
 
-const EditNoteBook = () => {
-  const notebookId = useParams();
+const EditNoteBook = ({ notebook }) => {
   const dispatch = useDispatch();
-  const notebooks = useSelector(state => Object.values(state.notebooks));
-  const notebook = notebooks.find(notebook => notebookId === notebook.id);
-  console.log(notebook);
 
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState(notebook.name);
@@ -23,8 +18,10 @@ const EditNoteBook = () => {
       notebookId: notebook.id,
       name
     }
-    const res = await dispatch(updateNotebook(payload))
-    setShowForm(false);
+    // const res = await dispatch(updateNotebook(payload))
+    // if (res) {
+    //   setShowForm(false);
+    // }
   };
 
   return (
