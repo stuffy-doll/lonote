@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
 import { Redirect, Link, Route } from "react-router-dom";
 import NoteList from "../Note";
-import EditNoteBook from "../EditNoteBookForm";
+import EditNoteBook from "../EditNoteBookForm/index";
 
 const Notebooks = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,10 @@ const Notebooks = () => {
   const data = useSelector(state => state.notebooks);
 
   // const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data])
 
   useEffect(() => {
     dispatch(getNotebooks(sessionUserId))
@@ -33,6 +37,7 @@ const Notebooks = () => {
       {sessionUserId && (
         <div>
           <NotebookForm />
+          {/* Don't render defaults */}
           {notebooks.map(notebook => (
             <div key={notebook.id} className="notebook-card">
               <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>

@@ -45,16 +45,13 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res) => {
 router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
   const notebookId = req.params.id;
   const notebook = await db.Notebook.findByPk(notebookId);
-  const notes = await db.Note.findAll({
-    where: { notebookId: notebookId }
-  })
   if (notebook) {
-    await notes.destroy();
+    await db.Note.destroy({ where: { notebookId: notebookId } });
     await notebook.destroy();
     res.status(200).json({ message: 'Delete successful.' });
   } else {
     res.status(400).json({ message: 'Unsuccessful' });
   }
-}))
+}));
 
 module.exports = router;

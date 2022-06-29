@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_NOTEBOOKS = 'notebooks/getNotebooks';
 const POST_NOTEBOOK = 'notebooks/postNotebook';
 const UPDATE_NOTEBOOK = 'notebooks/updateNotebook';
-const DELETE_NOTEBOOK = 'notebooks/updateNotebook';
+const DELETE_NOTEBOOK = 'notebooks/deleteNotebook';
 
 // Action creators
 const get = (notebooks) => {
@@ -63,7 +63,6 @@ export const createNotebook = (payload) => async dispatch => {
 export const deleteNotebook = (notebookId) => async dispatch => {
   const response = await csrfFetch(`/api/notebooks/${notebookId}`, {
     method: 'DELETE',
-    statusCode: 204,
     headers: { 'Content-Type': 'application/json' }
   });
   if (response.ok) {
@@ -92,7 +91,7 @@ const notebookReducer = (state = {}, action) => {
     // ToDo
     case DELETE_NOTEBOOK:
       newState = { ...state };
-      delete newState[action.notebook.id];
+      delete newState[action.notebook];
       return newState
     default:
       return state;

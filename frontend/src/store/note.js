@@ -60,7 +60,6 @@ export const createNote = (payload) => async dispatch => {
 export const destroyNote = (noteId) => async dispatch => {
   const response = await csrfFetch(`/api/notes/${noteId}`, {
     method: 'DELETE',
-    statusCode: 204,
     headers: { 'Content-Type': 'application/json' }
   });
   const note = await response.json();
@@ -85,7 +84,7 @@ const noteReducer = (state = {}, action) => {
       return newState;
     case DELETE_NOTE:
       newState = { ...state }
-      delete newState[action.note.id]
+      delete newState[action.note]
       return newState;
     default:
       return state
