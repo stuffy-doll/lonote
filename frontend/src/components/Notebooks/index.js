@@ -2,11 +2,12 @@ import { deleteNotebook, getNotebooks } from "../../store/notebook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
-import { Redirect, Link, Route } from "react-router-dom";
+import { Redirect, Link, Route, useHistory } from "react-router-dom";
 import NoteList from "../Note";
 import EditNoteBook from "../EditNoteBookForm/index";
 
 const Notebooks = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const sessionUserId = useSelector(state => state.session.user.id)
   const data = useSelector(state => state.notebooks);
@@ -19,7 +20,7 @@ const Notebooks = () => {
 
   useEffect(() => {
     dispatch(getNotebooks(sessionUserId))
-  }, [dispatch]);
+  }, [dispatch, sessionUserId]);
   // Redirect if there is no user
   // If you’re working with data that will be undefined when using the initial state; conditionally render it.
   const notebooks = Object.values(data);
@@ -38,19 +39,20 @@ const Notebooks = () => {
         <div>
           <NotebookForm />
           {/* Don't render defaults */}
-          {notebooks.map(notebook => (
-            <div key={notebook.id} className="notebook-card">
-              <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
-              {/* <EditNoteBook notebook={notebook} /> */}
-              <button onClick={async (e) => {
-                e.preventDefault();
-                const res = await dispatch(deleteNotebook(notebook.id));
-                if (res) {
-                  console.log(res);
-                }
-              }}>Delete This Notebook</button>
-            </div>
-          ))}
+          {notebooks.map(notebook =>
+            !notebook.isDefault && (
+              <div key={notebook.id} className="notebook-card">
+                <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
+                {/* <EditNoteBook notebook={notebook} /> */}
+                <button onClick={async (e) => {
+                  e.preventDefault();
+                  const res = await dispatch(deleteNotebook(notebook.id));
+                  if (res) {
+                    history.push('/notebooks')
+                  }
+                }}>Delete This Notebook</button>
+              </div>
+            ))}
           <Route path='/notebooks/:notebookId'>
             <NoteList />
           </Route>

@@ -33,7 +33,7 @@ router.post('/', validateSignup, asyncHandler(async (req, res) => {
   // Research this v
   const defaultNotebook = await Notebook.create({
     userId: user.id,
-    name: 'Default Notebook',
+    name: `${user.username}'s Default Notebook`,
     isDefault: true
   });
   await setTokenCookie(res, user);
