@@ -88,10 +88,13 @@ const notebookReducer = (state = {}, action) => {
       };
       return newState;
     case UPDATE_NOTEBOOK:
-    // ToDo
+      return {
+        ...state,
+        [action.notebook.id]: action.notebook
+      }
     case DELETE_NOTEBOOK:
       newState = { ...state };
-      delete newState[action.notebook];
+      delete newState[action.notebook.id];
       return newState
     default:
       return state;

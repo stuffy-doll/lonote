@@ -23,14 +23,22 @@ router.post('/', asyncHandler(async (req, res) => {
   return res.json(note);
 }));
 
-// Note Edit Route
+router.put('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const { title, content } = req.body;
+  const noteId = req.params.id;
+  const note = await db.Note.findByPk(noteId);
+  note.title = title;
+  note.content = content;
+  await note.save();
+  return res.json(note)
+}))
 
 router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
   const noteId = req.params.id;
   const note = await db.Note.findByPk(noteId);
   if (note) {
     await note.destroy();
-    res.status(200).json({ message: 'Delete successful.' });
+    res.status(200).json(note);
   } else {
     res.status(400).json({ message: 'Unsuccessful' });
   };

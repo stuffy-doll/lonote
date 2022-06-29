@@ -48,7 +48,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
   if (notebook) {
     await db.Note.destroy({ where: { notebookId: notebookId } });
     await notebook.destroy();
-    res.status(200).json({ message: 'Delete successful.' });
+    res.status(200).json(notebook);
   } else {
     res.status(400).json({ message: 'Unsuccessful' });
   }

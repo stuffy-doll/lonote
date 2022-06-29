@@ -37,7 +37,7 @@ const NoteList = () => {
                   e.preventDefault();
                   const res = await dispatch(destroyNote(note.id))
                   if (res) {
-                    console.log(res);
+                    // console.log(res);
                   }
                 }}>Delete Note</button>
               </div>
