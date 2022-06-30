@@ -4,15 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
 import { Redirect, Link, Route, useHistory } from "react-router-dom";
 import NoteList from "../Note";
-import EditNoteBook from "../EditNoteBookForm/index";
 
 const Notebooks = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionUserId = useSelector(state => state.session.user.id)
   const data = useSelector(state => state.notebooks);
-
-  // const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     console.log(data);

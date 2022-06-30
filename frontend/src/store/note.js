@@ -58,7 +58,7 @@ export const createNote = (payload) => async dispatch => {
 };
 
 export const updateNote = (payload) => async dispatch => {
-  const response = await csrfFetch(`/api/notes/${payload.noteId}`, {
+  const response = await csrfFetch(`/api/notes/${payload.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

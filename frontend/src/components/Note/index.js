@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { getNotes } from "../../store/note";
 import { destroyNote } from "../../store/note";
+import EditNote from "./EditNoteForm";
 import NoteForm from "./NewNoteForm";
 const { useSelector, useDispatch } = require("react-redux")
 
@@ -33,6 +34,7 @@ const NoteList = () => {
               <div key={note.id} className="note-card">
                 <p>{note.title}</p>
                 <p>{note.content}</p>
+                <EditNote note={note} />
                 <button onClick={async (e) => {
                   e.preventDefault();
                   const res = await dispatch(destroyNote(note.id))
