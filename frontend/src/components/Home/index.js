@@ -10,18 +10,25 @@ const Home = () => {
   const history = useHistory();
   const user = useSelector(state => state.session.user)
   const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
-  const defaultNotes = defaultNotebook.notes;
+  const defaultNotes = defaultNotebook?.notes;
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    dispatch(getNotebooks(user.id))
+    if (user) {
+      dispatch(getNotebooks(user?.id));
+    }
+    return () => {
+
+    }
   }, [dispatch, user]);
 
   useEffect(() => {
-    dispatch(getNotes(user.id))
+    if (user) {
+      dispatch(getNotes(user?.id));
+    }
   }, [dispatch, user]);
 
   const handleClick = (e) => {
@@ -32,8 +39,8 @@ const Home = () => {
     } else {
       setShowForm(false);
       setToggleButton('+');
-    }
-  }
+    };
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +49,7 @@ const Home = () => {
       notebookId: defaultNotebook.id,
       title,
       content
-    }
+    };
     const res = await dispatch(createNote(payload));
     if (res) {
       history.push(`/`);
@@ -50,11 +57,17 @@ const Home = () => {
       setContent('');
       setToggleButton('+');
       setShowForm(false);
-    }
-  }
+    };
+  };
 
-
-  return (
+  if (!user) {
+    return (
+      <div className="lo-note-splash">
+        <h1>Welcome to Lo/Note!</h1>
+        <h3>Great notes...Lo effort!</h3>
+      </div>
+    )
+  } else return (
     <main>
       <div>
         <div>
@@ -64,12 +77,12 @@ const Home = () => {
               <p>Example Note</p>
               <p>Click the plus to make a note!</p>
             </div>
-            {defaultNotes.map(note => {
+            {defaultNotes?.map(note => (
               <div className="note-card">
                 <p>{note.title}</p>
                 <p>{note.content}</p>
               </div>
-            })}
+            ))}
             <button onClick={handleClick}>{toggleButton}</button>
           </div>
         </div>
