@@ -9,11 +9,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.session.user)
-  const notebooks = useSelector(state => Object.values(state.notebooks));
-  const defaultNotebook = notebooks.find(notebook => notebook.isDefault);
-  const allNotes = useSelector(state => Object.values(state.notes));
-  const defaultNotes = allNotes.filter(note => note.notebookId === defaultNotebook.id);
-  console.log('defaultNotes::', defaultNotes);
+  const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
+  console.log(defaultNotebook);
+  const defaultNotes = defaultNotebook.notes;
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
   const [title, setTitle] = useState('');
@@ -21,11 +19,11 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getNotebooks(user.id))
-  }, [dispatch, user.id])
+  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(getNotes(user.id))
-  }, [dispatch, user.id])
+  }, [dispatch, user]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -56,51 +54,52 @@ const Home = () => {
     }
   }
 
-  if (user) {
-    return (
-      <main>
+
+  return (
+    <main>
+      {user ? (
         <div>
-          <h1>Welcome, {user.username}!</h1>
-          <div className="get-started">
-            <p>Let's get started...</p>
-          </div>
-          <div className="default-notes">
-            <div className="note-card">
-              <p>Example Note</p>
-              <p>Click the plus to make a note!</p>
-            </div>
-            {defaultNotes.map(note => {
+          <div>
+            <h1>Welcome, {user.username}!</h1>
+            <div className="default-notes">
               <div className="note-card">
-                <p>{note.title}</p>
-                <p>{note.content}</p>
+                <p>Example Note</p>
+                <p>Click the plus to make a note!</p>
               </div>
-            })}
-            <button onClick={handleClick}>{toggleButton}</button>
+              {defaultNotes.map(note => {
+                <div className="note-card">
+                  <p>{note.title}</p>
+                  <p>{note.content}</p>
+                </div>
+              })}
+              <button onClick={handleClick}>{toggleButton}</button>
+            </div>
           </div>
+          {showForm && (
+            <form className="new-note-form" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Note Title"
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+              />
+              <textarea
+                placeholder="Your notes..."
+                value={content}
+                onChange={e => setContent(e.target.value)}
+              />
+              <button type="submit">Create Note</button>
+            </form>
+          )}
         </div>
-        {showForm && (
-          <form className="new-note-form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Note Title"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-            <textarea
-              placeholder="Your notes..."
-              value={content}
-              onChange={e => setContent(e.target.value)}
-            />
-            <button type="submit">Create Note</button>
-          </form>
-        )}
-      </main>
-    )
-  } else {
-    return (
-      <h1>Welcome to Lo/Note</h1>
-    )
-  }
+      ) : (
+        <>
+          <h1>Please Log In</h1>
+        </>
+      )}
+    </main>
+  )
 }
+
 
 export default Home;

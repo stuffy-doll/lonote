@@ -3,7 +3,6 @@ import { csrfFetch } from "./csrf";
 // Constants
 const GET_NOTEBOOKS = 'notebooks/getNotebooks';
 const POST_NOTEBOOK = 'notebooks/postNotebook';
-const UPDATE_NOTEBOOK = 'notebooks/updateNotebook';
 const DELETE_NOTEBOOK = 'notebooks/deleteNotebook';
 
 // Action creators
@@ -20,13 +19,6 @@ const post = (notebook) => {
     notebook
   };
 };
-
-const update = (notebook) => {
-  return {
-    type: UPDATE_NOTEBOOK,
-    notebook
-  }
-}
 
 const destroy = (notebook) => {
   return {
@@ -56,10 +48,6 @@ export const createNotebook = (payload) => async dispatch => {
   };
 };
 
-// export const updateNotebook = (payload) => async dispatch => {
-//   const response = await csrfFetch(`/api/notebooks/${payload.notebookId}`)
-// }
-
 export const deleteNotebook = (notebookId) => async dispatch => {
   const response = await csrfFetch(`/api/notebooks/${notebookId}`, {
     method: 'DELETE',
@@ -87,11 +75,6 @@ const notebookReducer = (state = {}, action) => {
         [action.notebook.id]: action.notebook
       };
       return newState;
-    case UPDATE_NOTEBOOK:
-      return {
-        ...state,
-        [action.notebook.id]: action.notebook
-      }
     case DELETE_NOTEBOOK:
       newState = { ...state };
       delete newState[action.notebook.id];

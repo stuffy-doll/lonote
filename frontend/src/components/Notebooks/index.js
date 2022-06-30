@@ -37,10 +37,9 @@ const Notebooks = () => {
           <NotebookForm />
           {/* Don't render defaults */}
           {notebooks.map(notebook =>
-            !notebook.isDefault && (
+            !notebook.isDefault && (notebook.userId === sessionUserId) && (
               <div key={notebook.id} className="notebook-card">
                 <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
-                {/* <EditNoteBook notebook={notebook} /> */}
                 <button onClick={async (e) => {
                   e.preventDefault();
                   const res = await dispatch(deleteNotebook(notebook.id));
@@ -50,7 +49,7 @@ const Notebooks = () => {
                 }}>Delete This Notebook</button>
               </div>
             ))}
-          <Route path='/notebooks/:notebookId'>
+          <Route exact path='/notebooks/:notebookId'>
             <NoteList />
           </Route>
         </div>

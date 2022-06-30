@@ -6,7 +6,7 @@ import EditNote from "./EditNoteForm";
 import NoteForm from "./NewNoteForm";
 const { useSelector, useDispatch } = require("react-redux")
 
-// ToDo: Render a Note Page
+// ToDo: Render a Note Component
 const NoteList = () => {
   const notebookId = useParams().notebookId;
   const dispatch = useDispatch();
