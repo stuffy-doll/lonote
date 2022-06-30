@@ -8,9 +8,9 @@ import { getNotebooks } from "../../store/notebook";
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector(state => state.session.user)
-  const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
-  const defaultNotes = defaultNotebook?.notes;
+  let user = useSelector(state => state.session.user)
+  let defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
+  let defaultNotes = defaultNotebook?.notes;
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
   const [title, setTitle] = useState('');
@@ -21,13 +21,9 @@ const Home = () => {
       dispatch(getNotebooks(user?.id));
     }
     return () => {
-
-    }
-  }, [dispatch, user]);
-
-  useEffect(() => {
-    if (user) {
-      dispatch(getNotes(user?.id));
+      user = null;
+      defaultNotebook = [];
+      defaultNotes = [];
     }
   }, [dispatch, user]);
 
@@ -78,7 +74,7 @@ const Home = () => {
               <p>Click the plus to make a note!</p>
             </div>
             {defaultNotes?.map(note => (
-              <div className="note-card">
+              <div key={note.id} className="note-card">
                 <p>{note.title}</p>
                 <p>{note.content}</p>
               </div>
