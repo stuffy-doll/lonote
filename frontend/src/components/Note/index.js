@@ -15,12 +15,12 @@ const NoteList = () => {
 
   useEffect(() => {
     dispatch(getNotes(sessionUserId))
-  }, [dispatch]);
+  }, [dispatch, sessionUserId]);
 
   if (!notes.length) {
     return (
       <>
-        <h3>No Notes Yet!</h3>
+        <h3 className="no-notes">No Notes Yet!</h3>
         <NoteForm notebook={notebookId} />
       </>
     )

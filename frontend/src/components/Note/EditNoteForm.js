@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { updateNote } from "../../store/note";
 
 const EditNote = ({ note }) => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  console.log(note);
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
   const [showForm, setShowForm] = useState(false);
@@ -36,7 +33,6 @@ const EditNote = ({ note }) => {
     };
     const res = await dispatch(updateNote(payload));
     if (res) {
-      history.push(`/notebooks/${note.notebookId}`)
       setShowForm(false);
     }
   };

@@ -1,5 +1,5 @@
 import { deleteNotebook, getNotebooks } from "../../store/notebook";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotebookForm from "./NotebookForm";
 import { Redirect, Link, Route, useHistory } from "react-router-dom";
