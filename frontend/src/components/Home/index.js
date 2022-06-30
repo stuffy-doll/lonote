@@ -10,7 +10,6 @@ const Home = () => {
   const history = useHistory();
   const user = useSelector(state => state.session.user)
   const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
-  console.log(defaultNotebook);
   const defaultNotes = defaultNotebook.notes;
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
@@ -57,46 +56,40 @@ const Home = () => {
 
   return (
     <main>
-      {user ? (
+      <div>
         <div>
-          <div>
-            <h1>Welcome, {user.username}!</h1>
-            <div className="default-notes">
-              <div className="note-card">
-                <p>Example Note</p>
-                <p>Click the plus to make a note!</p>
-              </div>
-              {defaultNotes.map(note => {
-                <div className="note-card">
-                  <p>{note.title}</p>
-                  <p>{note.content}</p>
-                </div>
-              })}
-              <button onClick={handleClick}>{toggleButton}</button>
+          <h1>Welcome, {user.username}!</h1>
+          <div className="default-notes">
+            <div className="note-card">
+              <p>Example Note</p>
+              <p>Click the plus to make a note!</p>
             </div>
+            {defaultNotes.map(note => {
+              <div className="note-card">
+                <p>{note.title}</p>
+                <p>{note.content}</p>
+              </div>
+            })}
+            <button onClick={handleClick}>{toggleButton}</button>
           </div>
-          {showForm && (
-            <form className="new-note-form" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Note Title"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-              />
-              <textarea
-                placeholder="Your notes..."
-                value={content}
-                onChange={e => setContent(e.target.value)}
-              />
-              <button type="submit">Create Note</button>
-            </form>
-          )}
         </div>
-      ) : (
-        <>
-          <h1>Please Log In</h1>
-        </>
-      )}
+        {showForm && (
+          <form className="new-note-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Note Title"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
+            <textarea
+              placeholder="Your notes..."
+              value={content}
+              onChange={e => setContent(e.target.value)}
+            />
+            <button type="submit">Create Note</button>
+          </form>
+        )}
+      </div>
     </main>
   )
 }

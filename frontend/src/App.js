@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Notebooks from "./components/Notebooks";
 import Home from "./components/Home";
+import NotFound from "./components/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function App() {
             <Notebooks />
           </Route>
           <Route>
-            <h1>404: Not Found</h1>
+            <NotFound />
           </Route>
         </Switch>
       )}

@@ -2,22 +2,28 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { getNotes } from "../../store/note";
 import { destroyNote } from "../../store/note";
+import NotFound from "../NotFound";
 import EditNote from "./EditNoteForm";
 import NoteForm from "./NewNoteForm";
 const { useSelector, useDispatch } = require("react-redux")
 
 // ToDo: Render a Note Component
-const NoteList = () => {
+const NoteList = ({ notebooks }) => {
   const notebookId = useParams().notebookId;
   const dispatch = useDispatch();
   const sessionUserId = useSelector(state => state.session.user.id);
+  const notebookList = notebooks.map(notebook => notebook.id);
   const notes = useSelector(state => Object.values(state.notes).filter(note => note.notebookId === +notebookId));
 
   useEffect(() => {
     dispatch(getNotes(sessionUserId))
   }, [dispatch, sessionUserId]);
 
-  if (!notes.length) {
+  if (!notebookList.includes(+notebookId)) {
+    return (
+      <NotFound />
+    )
+  } else if (!notes.length) {
     return (
       <>
         <h3 className="no-notes">No Notes Yet!</h3>
@@ -48,7 +54,6 @@ const NoteList = () => {
         </main>
       )}
     </div>
-
   )
 }
 

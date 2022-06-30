@@ -12,10 +12,6 @@ const Notebooks = () => {
   const data = useSelector(state => state.notebooks);
 
   useEffect(() => {
-    console.log(data);
-  }, [data])
-
-  useEffect(() => {
     dispatch(getNotebooks(sessionUserId))
   }, [dispatch, sessionUserId]);
   // Redirect if there is no user
@@ -50,7 +46,7 @@ const Notebooks = () => {
               </div>
             ))}
           <Route exact path='/notebooks/:notebookId'>
-            <NoteList />
+            <NoteList notebooks={notebooks} />
           </Route>
         </div>
       )}
