@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Notebooks from "./components/Notebooks";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }

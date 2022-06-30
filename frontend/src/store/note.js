@@ -85,6 +85,7 @@ const noteReducer = (state = {}, action) => {
   let newState = { ...state };
   switch (action.type) {
     case GET_NOTES:
+      newState = {};
       action.notes.forEach(note => {
         newState[note.id] = note;
       });

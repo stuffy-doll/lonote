@@ -65,6 +65,7 @@ const notebookReducer = (state = {}, action) => {
   let newState = { ...state }
   switch (action.type) {
     case GET_NOTEBOOKS:
+      newState = {}
       action.notebooks.forEach(notebook => {
         newState[notebook.id] = notebook;
       });
