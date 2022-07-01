@@ -31,7 +31,7 @@ const NotebookForm = () => {
           required
           value={name}
           onChange={e => setName(e.target.value)} />
-        <button type="submit">+</button>
+        <button className="notebook-add" type="submit">+</button>
       </form>
     </div>
   )

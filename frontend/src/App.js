@@ -9,6 +9,7 @@ import Notebooks from "./components/Notebooks";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();

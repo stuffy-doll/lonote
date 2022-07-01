@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createNote, getNotes } from "../../store/note";
+import { createNote, destroyNote } from "../../store/note";
 import { getNotebooks } from "../../store/notebook";
+import EditNote from "../Note/EditNoteForm";
+import './Home.css'
 
 // ToDo: Render a user Home page
 const Home = () => {
@@ -19,12 +21,7 @@ const Home = () => {
   useEffect(() => {
     if (user) {
       dispatch(getNotebooks(user?.id));
-    }
-    return () => {
-      user = null;
-      defaultNotebook = [];
-      defaultNotes = [];
-    }
+    };
   }, [dispatch, user]);
 
   const handleClick = (e) => {
@@ -67,37 +64,45 @@ const Home = () => {
     <main>
       <div>
         <div>
-          <h1>Welcome, {user.username}!</h1>
+          <h1 className="welcome">Welcome, {user.username}!</h1>
           <div className="default-notes">
             <div className="note-card">
-              <p>Example Note</p>
-              <p>Click the plus to make a note!</p>
+              <p>Getting Started</p>
+              <p>Welcome to Lo/Note!</p>
             </div>
             {defaultNotes?.map(note => (
               <div key={note.id} className="note-card">
-                <p>{note.title}</p>
+                <p className="note-title">{note.title}</p>
                 <p>{note.content}</p>
+                <EditNote note={note} />
+                <button onClick={async (e) => {
+                  e.preventDefault();
+                  const res = await dispatch(destroyNote(note.id))
+                  if (res) {
+
+                  }
+                }}>Delete Note</button>
               </div>
             ))}
-            <button onClick={handleClick}>{toggleButton}</button>
+            {showForm && (
+              <form className="new-note-form" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="Note Title"
+                  value={title}
+                  onChange={e => setTitle(e.target.value)}
+                />
+                <textarea
+                  placeholder="Your notes..."
+                  value={content}
+                  onChange={e => setContent(e.target.value)}
+                />
+                <button type="submit">Create Note</button>
+              </form>
+            )}
+            <button className='toggle-button' onClick={handleClick}>{toggleButton}</button>
           </div>
         </div>
-        {showForm && (
-          <form className="new-note-form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Note Title"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-            <textarea
-              placeholder="Your notes..."
-              value={content}
-              onChange={e => setContent(e.target.value)}
-            />
-            <button type="submit">Create Note</button>
-          </form>
-        )}
       </div>
     </main>
   )

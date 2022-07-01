@@ -1,38 +1,90 @@
-.App {
-  text-align: center;
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+::-webkit-scrollbar-thumb {
+  background: #9B9FB5;
+  border-radius: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+::-webkit-scrollbar-thumb:hover {
+  width: 10px;
+  background: #B1B7D1;
+  border-radius: 5px
+}
+
+input {
+  border: 1px solid gray;
+  border-radius: 4px;
+  width: 170px;
+  height: auto;
+  margin: 4px
+}
+
+textarea {
+  border: none;
+  max-width: 170px;
+  min-width: 170px;
+  min-height: 175px;
+  max-height: 175px;
+  height: auto;
+  margin: 4px;
+  resize: none;
+}
+
+.session-nav {
+  height: 50px;
+  background-color: #8C7284;
+}
+
+.footer-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-top: 2px solid black;
+  height: 120px;
+  background-color: #9B9FB5;
+}
+
+button {
+  background-color: #9B9FB5;
+  color: white;
+  border: 0px;
+  border-radius: 2px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.note-card {
+  margin: 6px;
+  height: 240px;
+  width: 180px;
+  box-shadow: 2px 2px 6px #9B9FB5;
+  border-radius: 6px;
+  transition: 0.4s;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding: 12px;
+}
+
+.note-title {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.note-card:hover {
+  background-color: #9B9FB5;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
+.notebook-form {}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.notebook-add {}
