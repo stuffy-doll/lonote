@@ -6,16 +6,8 @@ module.exports = {
       {
         userId: 1,
         notebookId: 1,
-        title: 'DEMO TIME',
+        title: 'My demo note',
         content: 'Let\'s get this bread.',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        userId: 1,
-        notebookId: 1,
-        title: 'Demo note',
-        content: 'Hey everybody, it\'s me, a demo note.',
         createdAt: new Date(),
         updatedAt: new Date()
       }

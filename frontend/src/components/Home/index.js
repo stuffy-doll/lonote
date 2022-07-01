@@ -1,31 +1,44 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createNote, getNotes } from "../../store/note";
+import { createNote, destroyNote, getNotes } from "../../store/note";
 import { getNotebooks } from "../../store/notebook";
+import { login } from "../../store/session";
+import EditNote from "../Note/EditNoteForm";
+import './Home.css'
 
 // ToDo: Render a user Home page
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.session.user)
-  const notebooks = useSelector(state => Object.values(state.notebooks));
-  const defaultNotebook = notebooks.find(notebook => notebook.isDefault);
-  const allNotes = useSelector(state => Object.values(state.notes));
-  const defaultNotes = allNotes.filter(note => note.notebookId === defaultNotebook.id);
-  console.log('defaultNotes::', defaultNotes);
+  const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
+  const defaultNotes = useSelector(state => Object.values(state.notes).filter(note => note.notebookId === defaultNotebook?.id));
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [valErrors, setValErrors] = useState([]);
+  const [submitted, isSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(getNotebooks(user.id))
-  }, [dispatch, user.id])
+    if (user) {
+      dispatch(getNotebooks(user?.id));
+    };
+  }, [dispatch, user]);
 
   useEffect(() => {
-    dispatch(getNotes(user.id))
-  }, [dispatch, user.id])
+    if (user) {
+      dispatch(getNotes(user?.id));
+    };
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    const errors = [];
+    if (!title.length) errors.push('Note must have a title.');
+    if (title.length > 50) errors.push('Title too long! (50 characters max)');
+    setValErrors(errors);
+  }, [title]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -35,17 +48,19 @@ const Home = () => {
     } else {
       setShowForm(false);
       setToggleButton('+');
-    }
-  }
+      setValErrors([]);
+    };
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    isSubmitted(true);
     const payload = {
       userId: user.id,
-      notebookId: defaultNotebook.id,
+      notebookId: defaultNotebook?.id,
       title,
       content
-    }
+    };
     const res = await dispatch(createNote(payload));
     if (res) {
       history.push(`/`);
@@ -53,54 +68,81 @@ const Home = () => {
       setContent('');
       setToggleButton('+');
       setShowForm(false);
-    }
-  }
+      isSubmitted(false);
+    };
+  };
 
-  if (user) {
+  if (!user) {
     return (
-      <main>
+      <div className="lonote-splash">
+        <img className="lonote-logo" src="/images/lonote-logo.png" alt="logo" />
+        <div className="lonote-greet">
+          <h3>Great notes. Lo effort.</h3>
+          <p className="about">Lo/note is an Evernote clone built by Luis Sanchez-Porras.</p>
+          <button className="tour" onClick={async (e) => {
+            e.preventDefault();
+            return await dispatch(login({
+              credential: 'notey',
+              password: 'password'
+            }))
+          }}>Take a tour!</button>
+        </div>
+      </div>
+    )
+  } else return (
+    <main>
+      <div>
         <div>
-          <h1>Welcome, {user.username}!</h1>
-          <div className="get-started">
-            <p>Let's get started...</p>
-          </div>
+          <h1 className="welcome">Welcome, {user.username}!</h1>
+          {submitted && valErrors.length > 0 && (
+            <ul className="errors">
+              {valErrors.map(error => (
+                <li className="val-error" key={error}>{error}</li>
+              ))}
+            </ul>
+          )}
           <div className="default-notes">
             <div className="note-card">
-              <p>Example Note</p>
-              <p>Click the plus to make a note!</p>
+              <p>Getting Started</p>
+              <p>Welcome to Lo/Note!</p>
             </div>
-            {defaultNotes.map(note => {
-              <div className="note-card">
-                <p>{note.title}</p>
+            {defaultNotes?.map(note => (
+              <div key={note.id} className="note-card">
+                <p className="note-title">{note.title}</p>
                 <p>{note.content}</p>
+                <EditNote note={note} />
+                <button onClick={async (e) => {
+                  e.preventDefault();
+                  const res = await dispatch(destroyNote(note.id))
+                  if (res) {
+
+                  }
+                }}>Delete Note</button>
               </div>
-            })}
-            <button onClick={handleClick}>{toggleButton}</button>
+            ))}
+            {showForm && (
+              <form className="new-note-form" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="Note Title"
+                  value={title}
+                  onChange={e => setTitle(e.target.value)}
+                />
+                <textarea
+                  placeholder="Your notes..."
+                  value={content}
+                  onChange={e => setContent(e.target.value)}
+                />
+                <button type="submit">Create Note</button>
+              </form>
+            )}
+            <button className='toggle-button' onClick={handleClick}>{toggleButton}</button>
           </div>
         </div>
-        {showForm && (
-          <form className="new-note-form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Note Title"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-            <textarea
-              placeholder="Your notes..."
-              value={content}
-              onChange={e => setContent(e.target.value)}
-            />
-            <button type="submit">Create Note</button>
-          </form>
-        )}
-      </main>
-    )
-  } else {
-    return (
-      <h1>Welcome to Lo/Note</h1>
-    )
-  }
+      </div>
+    </main>
+  )
 }
+
 
 export default Home;

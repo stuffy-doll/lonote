@@ -1,0 +1,21 @@
+.notebook-form {
+  padding: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 16vw;
+  min-width: 16rem;
+  max-width: 160px;
+}
+
+.form-name {
+  width: 100rem;
+}
+
+.notebook-add {
+  height: 20px;
+  width: auto;
+  font-size: 14px;
+  font-weight: bold;
+}

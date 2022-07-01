@@ -1,3 +1,4 @@
+import './Notebooks.css'
 import { deleteNotebook, getNotebooks } from "../../store/notebook";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,16 +13,11 @@ const Notebooks = () => {
   const data = useSelector(state => state.notebooks);
 
   useEffect(() => {
-    console.log(data);
-  }, [data])
-
-  useEffect(() => {
     dispatch(getNotebooks(sessionUserId))
   }, [dispatch, sessionUserId]);
   // Redirect if there is no user
   // If you’re working with data that will be undefined when using the initial state; conditionally render it.
   const notebooks = Object.values(data);
-  // console.log('sessionUserId:: ', sessionUserId)
   if (!sessionUserId) {
     <Redirect to='/login' />
   }
@@ -33,14 +29,13 @@ const Notebooks = () => {
   return (
     <>
       {sessionUserId && (
-        <div>
+        <div className="notebook-sidebar">
           <NotebookForm />
           {/* Don't render defaults */}
           {notebooks.map(notebook =>
-            !notebook.isDefault && (
+            !notebook.isDefault && (notebook.userId === sessionUserId) && (
               <div key={notebook.id} className="notebook-card">
-                <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
-                {/* <EditNoteBook notebook={notebook} /> */}
+                <Link className="notebook-link" to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
                 <button onClick={async (e) => {
                   e.preventDefault();
                   const res = await dispatch(deleteNotebook(notebook.id));
@@ -50,8 +45,8 @@ const Notebooks = () => {
                 }}>Delete This Notebook</button>
               </div>
             ))}
-          <Route path='/notebooks/:notebookId'>
-            <NoteList />
+          <Route exact path='/notebooks/:notebookId'>
+            <NoteList notebooks={notebooks} />
           </Route>
         </div>
       )}

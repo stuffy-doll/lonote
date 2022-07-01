@@ -7,7 +7,9 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Notebooks from "./components/Notebooks";
 import Home from "./components/Home";
-import NoteList from "./components/Note";
+import NotFound from "./components/NotFound";
+import Footer from "./components/Footer";
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,8 +35,12 @@ function App() {
           <Route path='/notebooks'>
             <Notebooks />
           </Route>
+          <Route>
+            <NotFound />
+          </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
