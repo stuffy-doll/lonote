@@ -1,3 +1,4 @@
+import './NoteList.css'
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { getNotes } from "../../store/note";

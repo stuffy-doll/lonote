@@ -35,7 +35,7 @@ router.post('/users/:id(\\d+)', validateNotebook, asyncHandler(async (req, res) 
   return res.json(notebook)
 }));
 
-router.put('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.put('/:id(\\d+)', validateNotebook, asyncHandler(async (req, res) => {
   const notebook = await db.Notebook.findByPk(req.params.id);
   notebook.name = req.body.name;
   await notebook.save();

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createNote, destroyNote } from "../../store/note";
+import { createNote, destroyNote, getNotes } from "../../store/note";
 import { getNotebooks } from "../../store/notebook";
+import { login } from "../../store/session";
 import EditNote from "../Note/EditNoteForm";
 import './Home.css'
 
@@ -10,19 +11,35 @@ import './Home.css'
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  let user = useSelector(state => state.session.user)
-  let defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
-  let defaultNotes = defaultNotebook?.notes;
+  const user = useSelector(state => state.session.user)
+  const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
+  const defaultNotes = useSelector(state => Object.values(state.notes).filter(note => note.notebookId === defaultNotebook?.id));
+  console.log(defaultNotes);
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [valErrors, setValErrors] = useState([]);
+  const [submitted, isSubmitted] = useState(false);
 
   useEffect(() => {
     if (user) {
       dispatch(getNotebooks(user?.id));
     };
   }, [dispatch, user]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getNotes(user?.id));
+    };
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    const errors = [];
+    if (!title.length) errors.push('Note must have a title.');
+    if (title.length > 50) errors.push('Title too long! (50 characters max)');
+    setValErrors(errors);
+  }, [title]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -37,9 +54,10 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    isSubmitted(true);
     const payload = {
       userId: user.id,
-      notebookId: defaultNotebook.id,
+      notebookId: defaultNotebook?.id,
       title,
       content
     };
@@ -50,6 +68,7 @@ const Home = () => {
       setContent('');
       setToggleButton('+');
       setShowForm(false);
+      isSubmitted(false);
     };
   };
 
@@ -58,6 +77,13 @@ const Home = () => {
       <div className="lo-note-splash">
         <h1>Welcome to Lo/Note!</h1>
         <h3>Great notes...Lo effort!</h3>
+        <button onClick={async (e) => {
+          e.preventDefault();
+          return await dispatch(login({
+            credential: 'notey',
+            password: 'password'
+          }))
+        }}>Take a tour!</button>
       </div>
     )
   } else return (
@@ -65,6 +91,13 @@ const Home = () => {
       <div>
         <div>
           <h1 className="welcome">Welcome, {user.username}!</h1>
+          {submitted && valErrors.length > 0 && (
+            <ul className="errors">
+              {valErrors.map(error => (
+                <li className="val-error" key={error}>{error}</li>
+              ))}
+            </ul>
+          )}
           <div className="default-notes">
             <div className="note-card">
               <p>Getting Started</p>

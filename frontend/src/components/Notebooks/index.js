@@ -1,3 +1,4 @@
+import './Notebooks.css'
 import { deleteNotebook, getNotebooks } from "../../store/notebook";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +30,7 @@ const Notebooks = () => {
   return (
     <>
       {sessionUserId && (
-        <div>
+        <div className="notebook-sidebar">
           <NotebookForm />
           {/* Don't render defaults */}
           {notebooks.map(notebook =>

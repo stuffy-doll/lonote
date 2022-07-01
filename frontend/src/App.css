@@ -3,18 +3,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.5);
+  background: #33435B;
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9B9FB5;
+  background: #242F40;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   width: 10px;
-  background: #B1B7D1;
+  background: #425776;
   border-radius: 5px
 }
 
@@ -24,6 +24,10 @@ input {
   width: 170px;
   height: auto;
   margin: 4px
+}
+
+input:focus {
+  outline: 2px solid cornflowerblue;
 }
 
 textarea {
@@ -37,9 +41,26 @@ textarea {
   resize: none;
 }
 
+textarea:focus {
+  outline: 2px solid cornflowerblue;
+}
+
+.no-session-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  background-color: #7189FF;
+  font-weight: lighter;
+}
+
 .session-nav {
-  height: 50px;
-  background-color: #8C7284;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  background-color: #7189FF;
+  font-weight: lighter
 }
 
 .footer-bar {
@@ -49,11 +70,21 @@ textarea {
   right: 0;
   border-top: 2px solid black;
   height: 120px;
-  background-color: #9B9FB5;
+  background-color: #242F40;
+}
+
+.profile-button {
+  background-color: #33435B;
+  margin-left: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 100px;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 button {
-  background-color: #9B9FB5;
+  background-color: #7189FF;
   color: white;
   border: 0px;
   border-radius: 2px;
@@ -67,12 +98,33 @@ button:hover {
   margin: 6px;
   height: 240px;
   width: 180px;
-  box-shadow: 2px 2px 6px #9B9FB5;
   border-radius: 6px;
   transition: 0.4s;
   overflow: scroll;
   overflow-x: hidden;
   padding: 12px;
+  color: white;
+  background-color: #33435B;
+}
+
+.nav-link {
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.nav-link:hover {
+  background-color: #8599ff;
+}
+
+#home {
+  margin-left: 1vw;
+}
+
+#my-notebooks {
+  margin-left: 1vw;
 }
 
 .note-title {
@@ -81,8 +133,7 @@ button:hover {
 }
 
 .note-card:hover {
-  background-color: #9B9FB5;
-  color: white;
+  box-shadow: 2px 2px 6px 2px black;
 }
 
 .notebook-form {}
