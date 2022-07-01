@@ -1,4 +1,4 @@
-const { useEffect, useState } = require("react");
+const { useState } = require("react");
 const { useDispatch, useSelector } = require("react-redux");
 const { useHistory } = require("react-router-dom");
 const { createNotebook } = require("../../store/notebook");
