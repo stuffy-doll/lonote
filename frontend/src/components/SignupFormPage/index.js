@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
 
@@ -29,48 +29,47 @@ const SignupFormPage = () => {
   };
 
   return (
-    <form className='signup-form' onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        Email
-        <input
+    <div className="signup-container">
+      <img className="form-logo" src="/images/lonote-logo.png" alt="lonote-logo" />
+      <form className='signup-form' onSubmit={handleSubmit}>
+        <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul>
+        <input className="signup-email"
           type="text"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Username
-        <input
+        <input className="signup-username"
           type="text"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password
-        <input
+        <input className="signup-password"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Confirm Password
-        <input
+        <input className="signup-confirm"
           type="password"
+          placeholder="Confirm Password"
           value={confirmedPassword}
           onChange={(e) => setConfirmedPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Sign Up</button>
-    </form>
+        <button className="signup-submit" type="submit">Sign Up</button>
+        <div className="to-elsewhere">
+          <Link className="to-login" to="/login">Aready have an account? Login</Link>
+          <Link className="to-home" to="/">Cancel</Link>
+        </div>
+      </form>
+    </div>
   )
 };
 

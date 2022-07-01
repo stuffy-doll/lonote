@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './LoginForm.css';
 
 const LoginFormPage = () => {
@@ -26,30 +26,33 @@ const LoginFormPage = () => {
   }
 
   return (
-    <form className='login-form' onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        Username or Email
-        <input
+    <div className="login-container">
+      <img className="form-logo" src="/images/lonote-logo.png" alt="lonote-logo" />
+      <form className='login-form' onSubmit={handleSubmit}>
+        <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul>
+        <input className="login-username"
           type='text'
+          placeholder="Username or Email"
           value={credential}
           onChange={e => setCredential(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password
-        <input
+        <input className="login-password"
           type='password'
+          placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
         />
-      </label>
-      <button type='submit'>Log In</button>
-    </form>
+        <button className="login-submit" type='submit'>Log In</button>
+        <div className="to-elsewhere">
+          <Link className="to-signup" to="/signup">New Here? Sign Up!</Link>
+          <Link className="to-home" to="/">Cancel</Link>
+        </div>
+      </form>
+    </div>
   );
 };
 

@@ -18,7 +18,6 @@ const Notebooks = () => {
   // Redirect if there is no user
   // If you’re working with data that will be undefined when using the initial state; conditionally render it.
   const notebooks = Object.values(data);
-  // console.log('sessionUserId:: ', sessionUserId)
   if (!sessionUserId) {
     <Redirect to='/login' />
   }
@@ -36,7 +35,7 @@ const Notebooks = () => {
           {notebooks.map(notebook =>
             !notebook.isDefault && (notebook.userId === sessionUserId) && (
               <div key={notebook.id} className="notebook-card">
-                <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
+                <Link className="notebook-link" to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
                 <button onClick={async (e) => {
                   e.preventDefault();
                   const res = await dispatch(deleteNotebook(notebook.id));

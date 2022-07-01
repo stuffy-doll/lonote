@@ -14,7 +14,6 @@ const Home = () => {
   const user = useSelector(state => state.session.user)
   const defaultNotebook = useSelector(state => Object.values(state.notebooks).find(notebook => notebook.isDefault));
   const defaultNotes = useSelector(state => Object.values(state.notes).filter(note => note.notebookId === defaultNotebook?.id));
-  console.log(defaultNotes);
   const [showForm, setShowForm] = useState(false);
   const [toggleButton, setToggleButton] = useState('+');
   const [title, setTitle] = useState('');
@@ -49,6 +48,7 @@ const Home = () => {
     } else {
       setShowForm(false);
       setToggleButton('+');
+      setValErrors([]);
     };
   };
 
@@ -74,16 +74,19 @@ const Home = () => {
 
   if (!user) {
     return (
-      <div className="lo-note-splash">
-        <h1>Welcome to Lo/Note!</h1>
-        <h3>Great notes...Lo effort!</h3>
-        <button onClick={async (e) => {
-          e.preventDefault();
-          return await dispatch(login({
-            credential: 'notey',
-            password: 'password'
-          }))
-        }}>Take a tour!</button>
+      <div className="lonote-splash">
+        <img className="lonote-logo" src="/images/lonote-logo.png" alt="logo" />
+        <div className="lonote-greet">
+          <h3>Great notes. Lo effort.</h3>
+          <p className="about">Lo/note is an Evernote clone built by Luis Sanchez-Porras.</p>
+          <button className="tour" onClick={async (e) => {
+            e.preventDefault();
+            return await dispatch(login({
+              credential: 'notey',
+              password: 'password'
+            }))
+          }}>Take a tour!</button>
+        </div>
       </div>
     )
   } else return (
