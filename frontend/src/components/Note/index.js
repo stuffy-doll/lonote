@@ -26,33 +26,30 @@ const NoteList = ({ notebooks }) => {
     )
   } else if (!notes.length) {
     return (
-      <>
-        <h3 className="no-notes">No Notes Yet!</h3>
+      <div className='notes-container'>
         <NoteForm notebook={notebookId} />
-      </>
+      </div>
     )
   } else return (
     <div className="note-list">
-      <NoteForm notebook={notebookId} />
       {sessionUserId && (
-        <main>
-          {
-            notes.map(note => (
-              <div key={note.id} className="note-card">
-                <p>{note.title}</p>
-                <p>{note.content}</p>
-                <EditNote note={note} />
-                <button onClick={async (e) => {
-                  e.preventDefault();
-                  const res = await dispatch(destroyNote(note.id))
-                  if (res) {
-                    // console.log(res);
-                  }
-                }}>Delete Note</button>
-              </div>
-            ))
-          }
-        </main>
+        <div className="notes-container">
+          <NoteForm notebook={notebookId} />
+          {notes.map(note => (
+            <div key={note.id} className="note-card">
+              <p>{note.title}</p>
+              <p>{note.content}</p>
+              <EditNote note={note} />
+              <button onClick={async (e) => {
+                e.preventDefault();
+                const res = await dispatch(destroyNote(note.id))
+                if (res) {
+                  // console.log(res);
+                }
+              }}>Delete Note</button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )

@@ -1,5 +1,5 @@
 import './NoteForm.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createNote } from "../../store/note";
@@ -11,11 +11,21 @@ const NoteForm = ({ notebook }) => {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [valErrors, setValErrors] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
 
   const updateTitle = (e) => setTitle(e.target.value);
 
+  useEffect(() => {
+    const errors = [];
+    if (!title.length) errors.push('Note must have a title.');
+    if (title.length > 50) errors.push('Title too long (Character max 50).')
+    setValErrors(errors);
+  }, [title])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
     const payload = {
       userId: sessionUserId,
       notebookId: notebook,
@@ -27,12 +37,19 @@ const NoteForm = ({ notebook }) => {
       history.push(`/notebooks/${notebook}`);
       setTitle('');
       setContent('');
+      setSubmitted(false);
     }
   }
 
   return (
-    <>
-      <h3>Make a Note</h3>
+    <div>
+      {submitted && valErrors.length > 0 && (
+        <ul>
+          {valErrors.map(error => (
+            <li className='error' key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
       <div className="note-form">
         <form onSubmit={handleSubmit}>
           <input
@@ -50,7 +67,7 @@ const NoteForm = ({ notebook }) => {
           <button type='submit'>Make a note!</button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

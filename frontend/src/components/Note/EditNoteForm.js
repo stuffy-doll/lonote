@@ -52,7 +52,6 @@ const EditNote = ({ note }) => {
     <div className="edit-form-container">
       {hasSubmitted && validationErrors.length > 0 && (
         <div>
-          We found the following errors:
           <ul>
             {validationErrors.map((error) => (
               <li key={error}>{error}</li>

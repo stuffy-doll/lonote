@@ -29,8 +29,9 @@ const NotebookForm = () => {
       userId: sessionUserId,
     }
     const res = await dispatch(createNotebook(payload));
+    console.log(res)
     if (res) {
-      history.push(`/notebooks`);
+      history.push(`/notebooks/${res.id}`);
       setName('');
       setSubmitted(false);
     };

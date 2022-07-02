@@ -29,22 +29,23 @@ const Notebooks = () => {
   return (
     <>
       {sessionUserId && (
-        <div className="notebook-sidebar">
-          <NotebookForm />
-          {/* Don't render defaults */}
-          {notebooks.map(notebook =>
-            !notebook.isDefault && (notebook.userId === sessionUserId) && (
-              <div key={notebook.id} className="notebook-card">
-                <Link className="notebook-link" to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
-                <button onClick={async (e) => {
-                  e.preventDefault();
-                  const res = await dispatch(deleteNotebook(notebook.id));
-                  if (res) {
-                    history.push('/notebooks')
-                  }
-                }}>Delete This Notebook</button>
-              </div>
-            ))}
+        <div>
+          <div className="notebook-sidebar">
+            <NotebookForm />
+            {notebooks.map(notebook =>
+              !notebook.isDefault && (notebook.userId === sessionUserId) && (
+                <div key={notebook.id} className="notebook-card">
+                  <Link className="notebook-link" to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
+                  <button className="delete-notebook" onClick={async (e) => {
+                    e.preventDefault();
+                    const res = await dispatch(deleteNotebook(notebook.id));
+                    if (res) {
+                      history.push('/notebooks')
+                    }
+                  }}>Delete</button>
+                </div>
+              ))}
+          </div>
           <Route exact path='/notebooks/:notebookId'>
             <NoteList notebooks={notebooks} />
           </Route>

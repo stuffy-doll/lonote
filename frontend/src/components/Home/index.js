@@ -85,7 +85,7 @@ const Home = () => {
               credential: 'notey',
               password: 'password'
             }))
-          }}>Take a tour!</button>
+          }}>Demo the App!</button>
         </div>
       </div>
     )
@@ -136,7 +136,9 @@ const Home = () => {
                 <button type="submit">Create Note</button>
               </form>
             )}
-            <button className='toggle-button' onClick={handleClick}>{toggleButton}</button>
+            <div className="toggle-container">
+              <button className='toggle-button' onClick={handleClick}>{toggleButton}</button>
+            </div>
           </div>
         </div>
       </div>

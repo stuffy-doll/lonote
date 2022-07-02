@@ -1,8 +1,34 @@
-.note-list {
-  display: block;
-  margin-left: 40vw;
-  width: 40vw;
-  padding: 12px;
+.notes-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  margin-left: 20vw;
+  margin-right: 40px;
   background-color: #242F40;
   border-radius: 10px;
+  overflow-x: auto;
+}
+
+.note-form {
+  margin: 6px;
+  padding: 12px;
+  height: 240px;
+  width: 180px;
+  border-radius: 6px;
+  transition: 0.4s;
+  background-color: #33435B;
+  flex: 0 0 auto;
+}
+
+.note-form:hover {
+  box-shadow: 3px 3px 6px black;
+}
+
+.note-list {
+  flex: 0 0 auto;
+}
+
+.note-card {
+  flex: 0 0 auto;
 }
