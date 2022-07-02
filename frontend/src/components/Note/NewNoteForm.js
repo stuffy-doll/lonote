@@ -42,31 +42,29 @@ const NoteForm = ({ notebook }) => {
   }
 
   return (
-    <div>
+    <div className="note-form">
       {submitted && valErrors.length > 0 && (
-        <ul>
+        <ul className='errors'>
           {valErrors.map(error => (
-            <li className='error' key={error}>{error}</li>
+            <li key={error}>{error}</li>
           ))}
         </ul>
       )}
-      <div className="note-form">
-        <form onSubmit={handleSubmit}>
-          <input
-            type='text'
-            required
-            placeholder='Title'
-            onChange={updateTitle}
-            value={title}
-          />
-          <textarea
-            placeholder='Your Notes Here'
-            onChange={e => setContent(e.target.value)}
-            value={content}
-          />
-          <button type='submit'>Make a note!</button>
-        </form>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          required
+          placeholder='Title'
+          onChange={updateTitle}
+          value={title}
+        />
+        <textarea
+          placeholder='Your Notes Here'
+          onChange={e => setContent(e.target.value)}
+          value={content}
+        />
+        <button type='submit'>Make a note!</button>
+      </form>
     </div>
   );
 };

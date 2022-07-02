@@ -54,7 +54,7 @@ const EditNote = ({ note }) => {
         <div>
           <ul>
             {validationErrors.map((error) => (
-              <li key={error}>{error}</li>
+              <li className='errors' key={error}>{error}</li>
             ))}
           </ul>
         </div>
