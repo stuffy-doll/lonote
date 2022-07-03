@@ -9,7 +9,7 @@ import NoteList from "../Note";
 const Notebooks = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const sessionUserId = useSelector(state => state.session.user.id)
+  const sessionUserId = useSelector(state => state.session.user?.id)
   const data = useSelector(state => state.notebooks);
 
   useEffect(() => {
@@ -18,16 +18,11 @@ const Notebooks = () => {
   // Redirect if there is no user
   // If you’re working with data that will be undefined when using the initial state; conditionally render it.
   const notebooks = Object.values(data);
-  if (!sessionUserId) {
-    <Redirect to='/login' />
-  }
-
-  if (!notebooks) {
-    return null;
-  }
-
   return (
     <>
+      {!sessionUserId && (
+        <Redirect to='/login' />
+      )}
       {sessionUserId && (
         <div>
           <div className="notebook-sidebar">

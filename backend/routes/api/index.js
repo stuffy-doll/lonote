@@ -12,8 +12,8 @@ router.use('/users', usersRouter);
 router.use('/notebooks', notebooksRouter);
 router.use('/notes', notesRouter);
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
+// router.post('/test', (req, res) => {
+//   res.json({ requestBody: req.body });
+// });
 
 module.exports = router;
