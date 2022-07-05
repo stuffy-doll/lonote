@@ -12,8 +12,9 @@
 
 ### [Lo/Note Wiki](https://github.com/stuffy-doll/lonote/wiki)
 
-### [Live Link](https://lonote.herokuapp.com/)
+You can find the feature list, API routes, database schema and more in the wiki!
 
+### [Live Link](https://lonote.herokuapp.com/)
 
 ### Splash Page
 
