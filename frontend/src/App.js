@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
 import './App.css';
+import NotebookSplash from "./components/NotebooksV2/NotebooksSplash";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path='/notebooks'>
             <Notebooks />
+          </Route>
+          <Route path='/my-notebooks'>
+            <NotebookSplash />
           </Route>
           <Route>
             <NotFound />

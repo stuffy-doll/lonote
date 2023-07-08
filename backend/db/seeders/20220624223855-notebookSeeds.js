@@ -1,8 +1,14 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Notebooks', [
+    options.tableName = 'Notebooks'
+    return queryInterface.bulkInsert(options, [
       {
         userId: 1,
         name: 'notey\s Default Notebook',
@@ -14,6 +20,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Notebooks', null, {});
+    options.tableName = 'Notebooks'
+    return queryInterface.bulkDelete(options);
   }
 };

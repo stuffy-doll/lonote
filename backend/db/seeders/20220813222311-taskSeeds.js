@@ -1,8 +1,14 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Tasks', [
+    options.tableName = 'Tasks'
+    return queryInterface.bulkInsert(options, [
       {
         tasklistId: 1,
         title: 'Render this!',
@@ -14,6 +20,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Tasks', null, {});
+    options.tableName = 'Tasks'
+    return queryInterface.bulkDelete(options);
   }
 };
