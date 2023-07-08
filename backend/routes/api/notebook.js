@@ -19,7 +19,7 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   const userId = req.params.id;
   const notebooks = await db.Notebook.findAll({
     where: { userId: userId },
-    include: ['notes']
+    include: ['notes', 'sticky'],
   });
   return res.json(notebooks);
 }));

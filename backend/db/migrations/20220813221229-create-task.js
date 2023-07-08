@@ -1,4 +1,10 @@
 'use strict';
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Tasks', {
@@ -10,7 +16,8 @@ module.exports = {
       },
       tasklistId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'TaskLists' }
       },
       title: {
         allowNull: false,
@@ -19,7 +26,7 @@ module.exports = {
       content: {
         type: Sequelize.STRING(500)
       },
-      isComplte: {
+      isComplete: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
@@ -31,9 +38,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }, options);
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tasks');
+    return queryInterface.dropTable('Tasks', options);
   }
 };
